@@ -1,66 +1,111 @@
-//Starting the quiz 
+
+//Variables 
+
 const startEl = document.getElementById("start");
-//Submisstion bution
+
 const submitEl = document.getElementById("submit");
-//Final Button for Results
+
 const resultEl = document.getElementById("result");
 
+const containerOfQuestions = document.getElementById("questions");
 
-//Eventually link to my array in question.js
+const nextButtonFeature = document.getElementById("button");
+
+// for my questions in questions.JS file
 const quizQuestions = [];
 
-// create a start timer 
-let clockTime = 60;
+//Starting the indexing 
+let questionIndexing = 0;
 
-//Main Function for the Anime Quiz
+
+//To link with the start button when needing to hide the start screen 
+function startButton() {
+ document.getElementById("start-screen").classList.add("hide")
+ createQuiz();
+}
+
+//Event Listners Section 
+
+//Event Listeners for the Start Quiz
+startEl.addEventListener("click", startButton);
+
+//Event Listener for the Next button 
+nextButtonFeature.addEventListener("click", moveNextQuestion);
+console.log(nextButtonFeature);
+
+
+//Main Function for the Anime Quiz Game
 function createQuiz() {
 
  //This will store the output
  const output = [];
 
- //This will focus on interating each question 
- questionList.forEach((currentQuestion, index) => {
+ //focus on starting the first questions
+ const currentQuestion = questionList[questionIndexing];
 
-  // storing the list of answers
-  const answers = [];
 
-  // every possible available answer
-  for (letter in currentQuestion.answers) {
+ // storing the list of answers
+ const answers = [];
 
-   // will create a radio button to show for possible answer
-   answers.push(`<label> <input type="radio" name="question${index}" value="${letter}">
+ // every possible available answer
+ for (letter in currentQuestion.answers) {
+
+  // will create a radio button to show for possible answer
+  answers.push(`<label> 
+    <input type="radio" name="question${questionIndexing}" 
+    value="${letter}">
     ${letter} :
     ${currentQuestion.answers[letter]}
-    </label>`);
-  }
-
-  console.log(currentQuestion);
-
-  //link the questions and answers to the output
-  output.push(
-   `<div class="question"> ${currentQuestion.question} </div>
-    <div class="answers"> ${answers.join('')} </div>`
+    </label>`
   );
  }
+
+ console.log(currentQuestion);
+
+ //link the questions and answers to the output
+ output.push(
+  `<div class="question"> ${currentQuestion.question} </div>
+    <div class="answers"> ${answers.join('')} </div>`
  );
 
  //Combining and Displaying on the webpage
  // startEl.innerHTML = output.join('')
- document.getElementById("questions").innerHTML = output.join('');
- console.log(questions);
+ // document.getElementById("questions").innerHTML = output.join('');
+
+ containerOfQuestions.innerHTML = output.join('');
+
+ nextButtonFeature.textContent = "Next Question";
+ containerOfQuestions.appendChild(nextButtonFeature);
+
+ // Showing the first question 
+ // const containerOfQuestions = document.getElementById("questions");
+ // containerOfQuestions.innerHTML = output.join('');
+
+ //Present the next button for the next question 
+
+ console.log(nextButtonFeature);
+ console.log(containerOfQuestions);
+}
+//This will iterate the next question 
+function moveNextQuestion() {
+ questionIndexing++
+
+ //condition to ensure each question is answered
+ if (currentQuestion < questionList.length) {
+  // display the next question
+  console.log(createQuiz());
+ } else {
+  // If they are all answered display results
+  finalScore();
+ }
 }
 
-//Execution functions 
+//This will display the results 
+const finalScore = () => {
 
-createQuiz();
+ containerOfQuestions.innerHTML = "Quiz Completed! Display Final Score or Perform Other Actions.";
+};
 
-
-
-//Event Listeners 
-//startgame 
-startEl.addEventListener("click", createQuiz);
-
-//show results 
 
 
 
