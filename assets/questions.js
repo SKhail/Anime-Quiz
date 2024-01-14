@@ -3,17 +3,32 @@
 const questionList = [
  {
   question: "Who is the main character in Naruto?",
-  options: ["Naruto Uzumaki", "Sasuke Uchiha", "Sakura Haruno", "Hinata Hyuga"],
+  answers: {
+   a: "Naruto Uzumaki",
+   b: "Sasuke Uchiha",
+   c: "Sakura Haruno",
+   d: "Hinata Hyuga"
+  },
   correctAnswer: "Naruto Uzumaki"
  },
  {
-  question: "What is the name of Luffy's straw hat in One Piece?",
-  options: ["Going Merry", "Thousand Sunny", "Red Force", "Straw Hat"],
+  question: "What is the name of Luffy's ship in One Piece?",
+  answers: {
+   a: "Going Merry",
+   b: "Thousand Sunny",
+   c: "Red Force",
+   d: "Straw Hat"
+  },
   correctAnswer: "Thousand Sunny"
  },
  {
   question: "In Attack on Titan, what is the name of the main protagonist?",
-  options: ["Eren Yeager", "Levi Ackerman", "Mikasa Ackerman", "Armin Arlert"],
+  answers: {
+   a: "Eren Yeager",
+   b: "Levi Ackerman",
+   c: "Mikasa Ackerman",
+   d: "Armin Arlert"
+  },
   correctAnswer: "Eren Yeager"
  }
 ];

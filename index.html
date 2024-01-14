@@ -12,9 +12,11 @@
   <body>
       <div class="scores">
       <a href="highscores.html">View Highscores</a></div>
+    </div>
       <div class="timer">
       <span id="time">0</span></div>
     </div>
+    
     <div class="wrapper">
       <div id="start-screen" class="start">
         <h1>"Anime Insight Quest"</h1>
@@ -41,8 +43,9 @@
 
       <div id="feedback" class="feedback hide"></div>
     </div>
-
-    <script src="/assets/questions.js"></script>
+    <!-- placed the logic js first so the questions can be called orcodingly  -->
     <script src="/assets/logic.js"></script>
+    <script src="/assets/questions.js"></script>
+  
   </body>
 </html>
