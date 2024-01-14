@@ -5,10 +5,9 @@ const submitEl = document.getElementById("submit");
 //Final Button for Results
 const resultEl = document.getElementById("result");
 
-const quizGame = document.getElementById("questions");
 
 //Eventually link to my array in question.js
-const question = [];
+const quizQuestions = [];
 
 // create a start timer 
 let clockTime = 60;
@@ -20,21 +19,22 @@ function createQuiz() {
  const output = [];
 
  //This will focus on interating each question 
- question.forEach((currentQuestion, index) => {
+ questionList.forEach((currentQuestion, index) => {
 
   // storing the list of answers
   const answers = [];
 
   // every possible available answer
-  for (letter in question.answers) {
+  for (letter in currentQuestion.answers) {
 
    // will create a radio button to show for possible answer
-   answers.push(`<label> <input type="radio name="question${index}" value="${letter}">
+   answers.push(`<label> <input type="radio" name="question${index}" value="${letter}">
     ${letter} :
     ${currentQuestion.answers[letter]}
     </label>`);
   }
 
+  console.log(currentQuestion);
 
   //link the questions and answers to the output
   output.push(
@@ -47,7 +47,7 @@ function createQuiz() {
  //Combining and Displaying on the webpage
  // startEl.innerHTML = output.join('')
  document.getElementById("questions").innerHTML = output.join('');
- console.log(question);
+ console.log(questions);
 }
 
 //Execution functions 
