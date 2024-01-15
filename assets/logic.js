@@ -9,7 +9,7 @@ const resultEl = document.getElementById("result");
 
 const containerOfQuestions = document.getElementById("questions");
 
-const nextButtonFeature = document.getElementById("button");
+const nextButtonFeature = document.getElementById("nextButton");
 
 // for my questions in questions.JS file
 const quizQuestions = [];
@@ -28,10 +28,11 @@ function startButton() {
 
 //Event Listeners for the Start Quiz
 startEl.addEventListener("click", startButton);
-
+console.log(startEl);
 //Event Listener for the Next button 
 nextButtonFeature.addEventListener("click", moveNextQuestion);
 console.log(nextButtonFeature);
+
 
 
 //Main Function for the Anime Quiz Game
