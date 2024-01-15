@@ -1,5 +1,5 @@
 :root {
-  --background--color: linear-gradient(to right, #5c4bd2, #9e8afd);
+  --background-color: linear-gradient(to right, #5c4bd2, #9e8afd);
   --font--color-body: #333333;
   --font--text-: #ffffff;
   --btn--main: #ff94c2;
@@ -15,10 +15,10 @@ body {
   justify-content: center;
   height: 100vh;
   overflow: hidden;
-  font-family: var(--font-family);
+  font-family: poppins;
   font-size: 180%;
   color: var(--font--text-);
-  background: var(--background--color);
+  background: var(--background-color);
 }
 
 a {
@@ -30,10 +30,19 @@ a {
 a:hover {
   color: #8570a5;
 }
+h1 {
+  background: linear-gradient(transparent 0%, #5c4bd2 30%, #5c4bd2 80%, transparent 80%, transparent 100%);
+  display: inline;
+  line-height: 100%;
+  color: white;
+  font-size: 4rem;
+}
 
-/* Highlight the text different colour for users to see */
-.highlight {
-  color: #000000;
+p {
+  line-height: 100%;
+  color: white;
+  font-family: poppins;
+  font-size: 2rem;
 }
 
 /* buttons section  */
@@ -145,5 +154,29 @@ li:nth-child(odd) {
   border-radius: 25px;
   margin-bottom: 20px;
   transform: translateX(-50%);
-  /* justify-content: space-around; */
+}
+
+/* Questions layout */
+
+/* Targeting the Radio type button  */
+.questions-layout input[type='radio'] {
+  display: none;
+}
+
+.questions-layout {
+  font-size: 25px;
+  padding-left: 30px;
+  cursor: pointer;
+  position: relative;
+}
+.questions-layout::before {
+  content: '';
+  border-radius: 50%;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 2px;
+  left: 0;
+  border: 2px solid var(--btn--hover);
+  background-color: var(--btn--main);
 }

@@ -11,18 +11,17 @@
 
   <body>
       <div class="scores">
-      <a href="highscores.html">View Highscores</a></div>
+      <a href="highscores.html">View Highscores</a>
     </div>
       <div class="timer">
       <span id="time">0</span></div>
     </div>
-    
     <div class="wrapper">
       <div id="start-screen" class="start">
         <h1>"Anime Insight Quest"</h1>
         <p>
           Embark on an Anime Quest! Answer popular anime questions within the time limit. 
-          <span class="highlight">Beware! Incorrect answers will deduct ten seconds from your score/time! </span> Do you have what it takes to master the Anime Realm
+          Beware! Incorrect answers will deduct ten seconds from your score/time! Do you have what it takes to master the Anime Realm
         </p>
         <button id="start">Start Quiz</button>
   
@@ -30,7 +29,7 @@
       <div id="questions" class="hide">
         <h2 id="question-title"></h2>
         <div id="choices" class="choices"></div>
-        <button id="nextButton">Next Question/button>
+        <button id="nextButton">Next Question</button>
       </div>
 
       <div id="end-screen" class="hide">
@@ -45,8 +44,8 @@
       <div id="feedback" class="feedback hide"></div>
     </div>
     <!-- placed the questions js first so the questions can be called orcodingly  -->
-    <script src="/assets/questions.js"></script>
-    <script src="/assets/logic.js"></script>
+    <script type="module" src="/assets/questions.js" defer></script>
+    <script type="module" src="/assets/logic.js" defer></script>
   
   
   </body>
