@@ -35,7 +35,7 @@ h1 {
   display: inline;
   line-height: 100%;
   color: white;
-  font-size: 4rem;
+  font-size: 3.5rem;
 }
 
 p {
@@ -159,24 +159,45 @@ li:nth-child(odd) {
 /* Questions layout */
 
 /* Targeting the Radio type button  */
-.questions-layout input[type='radio'] {
-  display: none;
-}
+/* .questions-layout input[type='radio'] {
+  position: absolute;
+  opacity: 0;
+} */
 
 .questions-layout {
+  gap: 5px;
   font-size: 25px;
+  display: flex;
+  align-items: center;
   padding-left: 30px;
+  padding-top: 20px;
   cursor: pointer;
-  position: relative;
+  margin-top: 15px;
 }
-.questions-layout::before {
-  content: '';
-  border-radius: 50%;
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  top: 2px;
-  left: 0;
-  border: 2px solid var(--btn--hover);
-  background-color: var(--btn--main);
+.questions-layout input[type='radio'] {
+  display: inline-block;
+}
+
+.choices {
+}
+
+.option-A::before {
+  background-color: red;
+}
+
+.option-B::before {
+  background-color: green;
+}
+
+.option-C::before {
+  background-color: red;
+}
+
+.option-D::before {
+  background-color: red;
+}
+
+/* Next Button  */
+#nextButton {
+  margin-top: 90px;
 }
