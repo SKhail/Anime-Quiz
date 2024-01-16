@@ -5,51 +5,39 @@ const timerEl = document.getElementById("time");
 const startButton = document.getElementById("start");
 const startScreen = document.getElementById("start-screen");
 const questionsContainer = document.getElementById("questions");
-const nextButtonFeature = document.getElementById("nextButton");
+// const nextButtonFeature = document.getElementById("nextButton");
 //Needed to hide the text when clicking the startQuiz button 
 const descriptionText = document.querySelector(".start p");
+
+//errorMessage being displayed if the user is incorrect 
+const messageEl = document.getElementById("message")
 
 //Not using it yet 
 const submitEl = document.getElementById("submit");
 const resultEl = document.getElementById("result");
 
-
 // out of scope variables
-
 let timerClock = 60; //StartTime
 let timerInterval;  // to store the changes of time
-
-// Indexing the question
 let questionIndexing = 0;
-
-// let score = 0;
+let currentQuestion;
 
 // for my questions in questions.JS file
 const quizQuestions = questionList;
 
 
-let currentQuestion;
-// let incorrectScore = [];
-
-
-
 //Link with the start button when needing to hide the start screen 
 function openingButton() {
   // console.log("Button Clicked");
-
   //condtional to hide and show screen
   if (startButton.classList.contains("hide")) {
     console.log("Showing Start Screen");
     startScreen.classList.remove("hide");
     descriptionText.classList.remove("hide");
-
     console.log("Hide Screen" + startScreen);
     console.log("Hide Screen" + descriptionText);
-
     questionsContainer.classList.add("hide");
-
     console.log("Hide Screen" + questionsContainer)
-
     startButton.textContent = "Start Quiz";
   } else {
     // If the startScreen is visible,hide it and present questions
@@ -58,7 +46,6 @@ function openingButton() {
     descriptionText.classList.add("hide");
     console.log("Start Button is hiding and the text");
     questionsContainer.classList.remove("hide")
-
     createQuiz();
   }
 }
@@ -67,21 +54,18 @@ function openingButton() {
 startButton.addEventListener("click", openingButton);
 console.log(startButton);
 
-//Event Listener for the Next button 
-nextButtonFeature.addEventListener("click", moveNextQuestion);
-console.log(nextButtonFeature);
 
-//Starting the Anime Quiz Game
+
+//The Anime Quiz Game
 function createQuiz() {
-
   resetTimer(); //Reseting the Timer
+  hideMessage(); // Hide
 
   //This will store the output
   const output = [];
 
   //focus on starting the first questions
   currentQuestion = quizQuestions[questionIndexing];
-
 
   // storing the list of answers
   const answers = [];
@@ -97,7 +81,6 @@ function createQuiz() {
     </label>`
     );
   });
-
   console.log(currentQuestion);
 
   //link the questions and answers to the output
@@ -109,17 +92,14 @@ function createQuiz() {
   //Combining and Displaying on the webpage
   questionsContainer.innerHTML = output.join('');
 
-  // The ability to go to the next question 
-  nextButtonFeature.textContent = "Next Question";
-  questionsContainer.appendChild(nextButtonFeature);
+
 
   startTimer(); //Start the Timer
   // Testing the buttons 
   console.log(questionsContainer);
 }
 
-
-//This will iterate the next question but need to include time and penalty time when its wrong 
+// Iterate the next question but need to include time and penalty time when its wrong 
 function moveNextQuestion() {
   stopTimer(); //halt the timer when heading to the next question
 
@@ -127,28 +107,36 @@ function moveNextQuestion() {
 
   //Validating incorrect answers 
   if (!selectedAnswer || selectedAnswer.value !== currentQuestion.correct) {
-    timerClock -= 5;  //Decrease when the answer is incorrect
+    timerClock -= 5;  //Decrease when the answer is incorrect 
+    if (timerClock < 0) {  // Need this to avoid going below 0 
+      timerClock = 0;
+    }
+    displayMessage("Incorrect Answer! 5 seconds will be reduced in the time");
+  } else {
+    displayMessage("Correct Answer Press the Next Question"); // Success
   }
 
-  console.log(selectedAnswer);
+  if (timerClock === 0) {
+    displayMessage("Time is up! Quiz Over.")
+    stopTimer();
+    return;
+  }
 
-  //condition to ensure each question is answered and going to the next 
   if (questionIndexing < quizQuestions.length) {
-    // display the next question
-    questionIndexing++
+    questionIndexing++;
     createQuiz();
   } else {
     // If they are all answered display results
     finalScore();
   }
 
-  //Next question
-  questionIndexing++;
-
   startTimer();  //Start the timer when its the next question
 }
 
-console.log(quizQuestions);
+// console.log(quizQuestions);
+
+//Event Listener
+questionsContainer.addEventListener("click", moveNextQuestion);
 
 //This will display the results 
 const finalScore = () => {
@@ -156,13 +144,30 @@ const finalScore = () => {
   questionsContainer.innerHTML = "Quiz Completed! Display Final Score or Perform Other Actions.";
 };
 
-//Ensure the js is working 
-console.log("Logic.js is working successfully");
 
+console.log("Logic.js is working successfully"); //Ensure the js is working 
+
+
+
+//Error Message when its a incorrect answer
+
+function displayMessage(msg) {
+  messageEl.textContent = msg
+  if (msg.includes("Correct")) {   //if its success or error will be displayed
+    messageEl.classList.add("success");
+  } else {
+    messageEl.classList.remove("success");
+  }
+  messageEl.classList.remove("hide");
+}
+
+
+function hideMessage() {
+  messageEl.textContent = "";
+  messageEl.classList.add("hide");
+}
 
 // This is the Timer Section 
-
-//Start Timer 
 function startTimer() {
   timerInterval = setInterval(function () {
     timerClock--;
@@ -186,3 +191,15 @@ function resetTimer() {
 function stopTimer() {
   clearInterval(timerInterval)
 }
+
+
+
+
+// The ability to go to the next question 
+// nextButtonFeature.textContent = "Next Question";
+// questionsContainer.appendChild(nextButtonFeature);
+
+
+//Event Listener for the Next button 
+// nextButtonFeature.addEventListener("click", moveNextQuestion);
+// console.log(nextButtonFeature);

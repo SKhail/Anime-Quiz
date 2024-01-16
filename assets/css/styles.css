@@ -178,9 +178,6 @@ li:nth-child(odd) {
   display: inline-block;
 }
 
-.choices {
-}
-
 .option-A::before {
   background-color: red;
 }
@@ -200,4 +197,19 @@ li:nth-child(odd) {
 /* Next Button  */
 #nextButton {
   margin-top: 90px;
+}
+
+/* displaying  message when a user types the wrong answer and right */
+.message {
+  font-size: 25px;
+  margin-top: 10px;
+}
+.error {
+  color: red;
+}
+.success {
+  color: greenyellow;
+}
+.hide {
+  display: none;
 }
