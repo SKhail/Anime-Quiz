@@ -110,7 +110,10 @@ function createQuiz() {
 
     startTimer(); //Start the Timer
   } else {
-    console.error("currentQuestion is underfined");
+    // console.error("currentQuestion is underfined");
+    console.log("No more questions - game end");
+
+    finalScore()
   }
 
   // Testing the buttons 
@@ -119,6 +122,7 @@ function createQuiz() {
 
 // Iterate the next question but need to include time and penalty time when its wrong 
 function moveNextQuestion(event) {
+
   stopTimer(); //halt the timer when heading to the next question
 
   console.log("Event: ", event);  // when you have tim einspect this OBJECT
@@ -145,12 +149,12 @@ function moveNextQuestion(event) {
     } else {
       displayMessage("Correct Answer On to the next question"); // Success
     }
-
+    console.log("Current Index: ", questionIndexing);
     if (questionIndexing < quizQuestions.length) {
       questionIndexing++;
       createQuiz();
     } else {
-      // If they are all answered display results
+      stopTimer();
       finalScore();
     }
 
@@ -258,16 +262,18 @@ function showStartButton() {
 //This will display the results 
 function finalScore() {
 
+  questionsContainer.classList.add("hide");
+  endScreen.classList.remove("hide")
   finalScoreValue.textContent = displayFinalScore; //Displaying the final score
-  endScreen.classList.remove = ("hide")
   // questionsontainer.innerHTML = "Quiz Completed! Display Final Score or Perform Other Actions.";
 }
 
 //Adding event listner to the submision button 
-submitEl.addEventListener("click, submitScore ");
-
+submitEl.addEventListener("click", submitScore);
+console.log(submitEl);
 
 function submitScore() {
+  // think of how to use the EVENT object to capture the input VALUE
   //store the initials
   const initials = document.getElementById("initials").toUpperCase()
 
