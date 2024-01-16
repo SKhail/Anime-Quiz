@@ -204,11 +204,16 @@ li:nth-child(odd) {
   font-size: 25px;
   margin-top: 10px;
 }
-.error {
-  color: red;
-}
+
 .success {
   color: greenyellow;
+}
+#incorrectMessage {
+  font-weight: bolder;
+  text-align: center;
+  font-size: 25px;
+  margin-top: 10px;
+  color: red;
 }
 .hide {
   display: none;

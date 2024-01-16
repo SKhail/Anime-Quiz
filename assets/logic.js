@@ -39,6 +39,7 @@ function openingButton() {
     questionsContainer.classList.add("hide");
     console.log("Hide Screen" + questionsContainer)
     startButton.textContent = "Start Quiz";
+    hideMessage(); // Hide the messages when transitioning to questions 
   } else {
     // If the startScreen is visible,hide it and present questions
     console.log("This is hiding the start-screen, showing the questions");
@@ -59,7 +60,7 @@ console.log(startButton);
 //The Anime Quiz Game
 function createQuiz() {
   resetTimer(); //Reseting the Timer
-  hideMessage(); // Hide
+
 
   //This will store the output
   const output = [];
@@ -69,25 +70,33 @@ function createQuiz() {
 
   // storing the list of answers
   const answers = [];
+  let correctAnswer;
 
   //testing the use of Object.entries to iterate over the answers
   Object.entries(currentQuestion.answers).forEach(([letter, answerText]) => {
     // will create a radio button to show for possible answer
+
     answers.push(`<label class="questions-layout"> 
-    <input type="radio" name="question ${questionIndexing}" 
-    value="${letter}">
-    ${letter} :
-    ${answerText}
-    </label>`
+     <input type="radio" name="question-${questionIndexing}" 
+     value="${letter}">
+     ${letter} :
+     ${answerText}
+     </label>`
     );
+
+    if (currentQuestion.correct === letter) {
+      correctAnswer = answerText // this should get the correct answer passing due to previously being underfined
+    }
   });
-  console.log(currentQuestion);
 
   //link the questions and answers to the output
   output.push(
     `<div class="question"> ${currentQuestion.question} </div>
     <div class="answers"> ${answers.join('')} </div>`
   );
+
+  //Testing it
+  console.log("Show me the Correct Answer", currentQuestion.correctAnswer);
 
   //Combining and Displaying on the webpage
   questionsContainer.innerHTML = output.join('');
@@ -100,26 +109,33 @@ function createQuiz() {
 }
 
 // Iterate the next question but need to include time and penalty time when its wrong 
-function moveNextQuestion() {
+function moveNextQuestion(event) {
+
+  // console.log("Event: ", event);  // when you have tim einspect this OBJECT
+  console.log("Event Target: ", event.target);
+  console.log("Label or wrapping element: ", event.target.children);
+  console.log("Input Element: ", event.target.children[0]);
+  console.log("Value: ", event.target.children[0].value);
+
+  console.log("Heading the next question");
+
   stopTimer(); //halt the timer when heading to the next question
 
-  const selectedAnswer = document.querySelector(`input[name="question ${questionIndexing}"]:checked`);
+  //const selectedAnswer = document.querySelector(`input[name="question-${questionIndexing}"]:checked`);
+  const selectedAnswer = event.target.children[0].value;
+  console.log("Selected answer:", selectedAnswer);
 
+  console.log("Current Q: ", currentQuestion)
   //Validating incorrect answers 
-  if (!selectedAnswer || selectedAnswer.value !== currentQuestion.correct) {
+  if (!selectedAnswer || selectedAnswer !== currentQuestion.correctAnswer) {
     timerClock -= 5;  //Decrease when the answer is incorrect 
     if (timerClock < 0) {  // Need this to avoid going below 0 
       timerClock = 0;
     }
     displayMessage("Incorrect Answer! 5 seconds will be reduced in the time");
+    // document.getElementById("wrongMessage").textContent = "Incorrect Answer! 5 seconds will be reduced";
   } else {
-    displayMessage("Correct Answer Press the Next Question"); // Success
-  }
-
-  if (timerClock === 0) {
-    displayMessage("Time is up! Quiz Over.")
-    stopTimer();
-    return;
+    displayMessage("Correct Answer On to the next question"); // Success
   }
 
   if (questionIndexing < quizQuestions.length) {
@@ -131,6 +147,10 @@ function moveNextQuestion() {
   }
 
   startTimer();  //Start the timer when its the next question
+
+
+  console.log("current question:", currentQuestion);
+  console.log("correct answer:", currentQuestion.correctAnswer);
 }
 
 // console.log(quizQuestions);
@@ -138,33 +158,44 @@ function moveNextQuestion() {
 //Event Listener
 questionsContainer.addEventListener("click", moveNextQuestion);
 
-//This will display the results 
-const finalScore = () => {
 
-  questionsContainer.innerHTML = "Quiz Completed! Display Final Score or Perform Other Actions.";
-};
-
-
-console.log("Logic.js is working successfully"); //Ensure the js is working 
 
 
 
 //Error Message when its a incorrect answer
 
 function displayMessage(msg) {
-  messageEl.textContent = msg
-  if (msg.includes("Correct")) {   //if its success or error will be displayed
+
+  console.log("Displaying Message:", msg);
+
+  if (msg.includes("Incorrect")) {   //if its success or error will be displayed
     messageEl.classList.add("success");
-  } else {
+    messageEl.textContent = msg;
     messageEl.classList.remove("success");
+    // document.getElementById("wrongMessage").classList.remove("hide");
+    timerClock -= 5;
+    if (timerClock < 0) {
+      timerClock = 0;
+    }
+  } else {
+    messageEl.textContent = "Correct Answer! On to the next question";
+    messageEl.classList.add("success");
+    //Presenting error
+    // document.getElementById("wrongMessage").textContent = "";
+    document.getElementById("wrongMessage").classList.add("hide");
   }
   messageEl.classList.remove("hide");
 }
+
+console.log("does it minus 5 seconds " + timerClock);
+console.log(messageEl);
 
 
 function hideMessage() {
   messageEl.textContent = "";
   messageEl.classList.add("hide");
+  document.getElementById("wrongMessage").textContent = "";
+  // document.getElementById("wrongMessage").classList.remove("hide");
 }
 
 // This is the Timer Section 
@@ -172,11 +203,17 @@ function startTimer() {
   timerInterval = setInterval(function () {
     timerClock--;
     timerEl.textContent = timerClock;
-    console.log('Time left,' + timerClock);
-
+    // displayMessage('Time left,' + timerClock);
     if (timerClock === 0) {
-      clearInterval(startTimer);
-      alert('⏰Time is Up⏰');
+      clearInterval(timerInterval);
+      alert('Time is Up, Anime Quiz is done');
+      showStartButton() //Will need this to redirect me to the main page 
+    }
+
+    // keeps going below 0 added addtional condition
+    if (timerClock < 0) {
+      timerClock = 0;
+      clearInterval(timerInterval)
     }
   }, 1000);
 }
@@ -193,6 +230,22 @@ function stopTimer() {
 }
 
 
+function showStartButton() {
+  startButton.classList.remove("hide");
+  descriptionText.classList.remove("hide");
+  questionsContainer.classList.add("hide");
+  startButton.textContent = "Start Quiz"
+}
+
+
+//This will display the results 
+const finalScore = () => {
+
+  questionsContainer.innerHTML = "Quiz Completed! Display Final Score or Perform Other Actions.";
+};
+
+
+console.log("Logic.js is working successfully"); //Ensure the js is working 
 
 
 // The ability to go to the next question 

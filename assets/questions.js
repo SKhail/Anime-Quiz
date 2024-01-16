@@ -9,7 +9,8 @@ export const questionList = [
    C: "Sakura Haruno",
    D: "Hinata Hyuga"
   },
-  correctAnswer: "Naruto Uzumaki"
+  // correctAnswer: "Naruto Uzumaki"
+  correctAnswer: "A"
  },
  {
   question: "What is the name of Luffy's ship in One Piece?",
@@ -19,7 +20,7 @@ export const questionList = [
    C: "Red Force",
    D: "Straw Hat"
   },
-  correctAnswer: "Thousand Sunny"
+  correctAnswer: "B"
  },
  {
   question: "In Attack on Titan, what is the name of the main protagonist?",
@@ -29,7 +30,7 @@ export const questionList = [
    C: "Mikasa Ackerman",
    D: "Armin Arlert"
   },
-  correctAnswer: "Eren Yeager"
+  correctAnswer: "A"
  }
 ];
 
