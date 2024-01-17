@@ -17,7 +17,7 @@
       <span id="time">0</span></div>
     </div>
     <div class="wrapper">
-      <div id="start-screen" class="start">
+      <div id="start-screen" class="start hide">
         <h1>"Anime Insight Quest"</h1>
         <p>
           Embark on an Anime Quest! Answer popular anime questions within the time limit. 
@@ -25,14 +25,10 @@
         </p>
         <button id="start">Start Quiz</button>
 
-
-
       <!-- where my questions will be displayed -->
       <div id="questions" class="hide">
         <h2 id="question-title"></h2>
         <div id="choices" class="choices"></div>
-        <!-- <div id="message" class="message hide"></div>
-        <div id="wrongMessage" class="hide"></div> -->
       </div>
       
       <div class="msg-container">
@@ -50,8 +46,8 @@
       </div>  
     
   
-      <div id="feedback" class="feedback hide"></div>
-    </div>
+      <!-- <div id="feedback" class="feedback hide"></div> -->
+
     <!-- placed the questions js first so the questions can be called orcodingly  -->
     <script type="module" src="/assets/js/questions.js" defer></script>
     <script type="module" src="/assets/js/logic.js" defer></script>

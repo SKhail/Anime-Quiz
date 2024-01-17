@@ -32,25 +32,33 @@ const quizQuestions = questionList;
 
 //Link with the start button when needing to hide the start screen 
 function openingButton() {
-  // console.log("Button Clicked");
-  //condtional to hide and show screen
-  if (startButton.classList.contains("hide")) {
+  console.log("Button Clicked");
+
+  // condtion to hide and show screen
+  if (!startScreen.classList.contains("hide")) {
     console.log("Showing Start Screen");
     startScreen.classList.remove("hide");
     descriptionText.classList.remove("hide");
+    questionsContainer.classList.add("hide");
+    startButton.textContent = "Start Quiz";
+    hideMessage();
+
+    // Hide the messages when transitioning to questions 
     console.log("Hide Screen" + startScreen);
     console.log("Hide Screen" + descriptionText);
-    questionsContainer.classList.add("hide");
     console.log("Hide Screen" + questionsContainer)
-    startButton.textContent = "Start Quiz";
-    hideMessage(); // Hide the messages when transitioning to questions 
+
   } else {
-    // If the startScreen is visible,hide it and present questions
-    console.log("This is hiding the start-screen, showing the questions");
+    console.log("This is hiding the start-screen, showing the questions"); // If the startScreen is visible,hide it and present questions
     startButton.classList.add("hide");
     descriptionText.classList.add("hide");
-    console.log("Start Button is hiding and the text");
-    questionsContainer.classList.remove("hide")
+    questionsContainer.classList.remove("hide");
+
+    //if the end-screen is shown,hide it 
+    if (!endScreen.classList.contains("hide")) {
+      endScreen.classList.add("hide");
+    }
+
     createQuiz();
   }
 }
@@ -58,6 +66,7 @@ function openingButton() {
 //Event Listeners for the Start Quiz
 startButton.addEventListener("click", openingButton);
 console.log(startButton);
+
 
 
 
@@ -89,12 +98,10 @@ function createQuiz() {
       );
 
       if (currentQuestion.correct === letter) {
-        correctAnswer = answerText; // this should get the correct answer passing due to previously being underfined
+        correctAnswer = letter;
+        // correctAnswer = answerText; // this should get the correct answer passing due to previously being underfined
       }
     });
-
-    //Testing if it works 
-    console.log("Show Correct Answer: ", correctAnswer);
 
     //link the questions and answers to the output
     output.push(
@@ -125,29 +132,30 @@ function moveNextQuestion(event) {
 
   stopTimer(); //halt the timer when heading to the next question
 
-  console.log("Event: ", event);  // when you have tim einspect this OBJECT
-  console.log("Event Target: ", event.target);
-  console.log("Label or wrapping element: ", event.target.children);
-  console.log("Input Element: ", event.target.children[0]);
-  console.log("Value: ", event.target.children[0].value);
-  console.log("Heading the next question");
-  if (currentQuestion) {
-    const selectedAnswer = event.target.children[0].value;
+  console.log("Event: ", event);  // when you have time inspect this OBJECT
+
+  // console.log("Input Element: ", event.target.children[0]);
+  //currentQuestion
+
+  if (event.target.tagName === 'INPUT') {
+    // const selectedAnswer = event.target.children[0].value;
+    const selectedAnswer = event.target.value;
+
     console.log("Selected answer:", selectedAnswer);
 
     console.log("Current Question: ", currentQuestion)
 
-    // 
+    // (!selectedAnswer || selectedAnswer !== currentQuestion.correctAnswer)
     //Validating incorrect answers 
-    if (!selectedAnswer || selectedAnswer !== currentQuestion.correctAnswer) {
+
+    if (selectedAnswer !== currentQuestion.correctAnswer) {
       timerClock -= 5;  // Decrease when the answer is incorrect 
-      if (timerClock <= 0) {  // Need this to avoid going below 0 
+      if (timerClock <= 0) {
         timerClock = 0;
       }
-      displayMessage("Incorrect Answer! 5 seconds will be reduced in the time");
-      // document.getElementById("wrongMessage").textContent = "Incorrect Answer! 5 seconds will be reduced";
     } else {
-      displayMessage("Correct Answer On to the next question"); // Success
+      displayFinalScore++;
+      startTimer();
     }
     console.log("Current Index: ", questionIndexing);
     if (questionIndexing < quizQuestions.length) {
@@ -158,26 +166,13 @@ function moveNextQuestion(event) {
       finalScore();
     }
 
-    startTimer();  //Start the timer when its the next question
-
-  } else {
-    console.error("currentQuestion is still underfined")  //need to check if its passing or not
   }
-
-  console.log("current question:", currentQuestion);
-  console.log("correct answer:", currentQuestion.correctAnswer);
 }
-
-// console.log(quizQuestions);
 
 //Event Listener
 questionsContainer.addEventListener("click", moveNextQuestion);
 console.log(questionsContainer);
 
-
-
-
-//Error Message when its a incorrect answer
 
 function displayMessage(msg) {
 
@@ -217,7 +212,7 @@ function hideMessage() {
   wrongMessageEl.textContent = '';
   wrongMessageEl.classList.add('hide');
 
-  msgCont.classList.remove("hide");
+  // msgCont.classList.remove("hide");
 
 }
 
@@ -225,16 +220,14 @@ function hideMessage() {
 function startTimer() {
   timerInterval = setInterval(function () {
     timerClock--;
-
-
     if (timerClock <= 0) {
-      clearInterval(timerInterval);
       displayMessage('Time is Up, Anime Quiz is done');
-      showStartButton() //Will need this to redirect me to the main page 
+      showStartButton(); //Will need this to redirect 
+      clearInterval(timerInterval);
       timerClock = 0;
+      timerEl.textContent = timerClock;
     } else {
       timerEl.textContent = timerClock;
-      clearInterval(timerInterval)
     }
   }, 1000);
 }
@@ -247,7 +240,7 @@ function resetTimer() {
 
 //Ability to stop the timer 
 function stopTimer() {
-  clearInterval(timerInterval)
+  clearInterval(timerInterval);
 }
 
 
@@ -255,7 +248,9 @@ function showStartButton() {
   startButton.classList.remove("hide");
   descriptionText.classList.remove("hide");
   questionsContainer.classList.add("hide");
-  startButton.textContent = "Start Quiz"
+  endScreen.classList.add("hide");
+  startScreen.classList.remove("hide");
+  startButton.textContent = "Start Quiz";
 }
 
 
@@ -265,7 +260,7 @@ function finalScore() {
   questionsContainer.classList.add("hide");
   endScreen.classList.remove("hide")
   finalScoreValue.textContent = displayFinalScore; //Displaying the final score
-  // questionsontainer.innerHTML = "Quiz Completed! Display Final Score or Perform Other Actions.";
+
 }
 
 //Adding event listner to the submision button 
@@ -273,16 +268,24 @@ submitEl.addEventListener("click", submitScore);
 console.log(submitEl);
 
 function submitScore() {
+
+  stopTimer(); //Pause this for the user to type the Initials 
+
+
   // think of how to use the EVENT object to capture the input VALUE
   //store the initials
-  const initials = document.getElementById("initials").toUpperCase()
+  const initials = document.getElementById("initials").toUpperCase();
 
   const storingScores = JSON.parse(localStorage.getItem("scores")) || [];
   storingScores.push({ initials, score: finalScoreValue });
   localStorage.setItem("scores", JSON.stringify(storingScores));
 
+  startTimer(); //Resume the timer after the score been submitted 
+
+  showStartButton();
+  createQuiz();
   //Want to redirect to the highscore page
   window.location.href = "highscores.html";
 }
 
-// console.log("Logic.js is working successfully"); //Ensure the js is working 
+

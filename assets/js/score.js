@@ -1,14 +1,12 @@
 //Out of scoped variables 
-
-const containerHighScore = document.getElementById("highscore");
+const containerHighScore = document.getElementById("highscores");
 const clearEl = document.getElementById("clear");
 
 //The aim of this is to show the highscores on the highscore page
 function showHighScores() {
+ const highscores = JSON.parse(localStorage.getItem("highscores")) || [];
 
- const highscores = JSON.parse(localStorage.getItem("highscore")) || [];
-
- containerHighScore.innerHTML = ''; //Clear the existing information
+ containerHighScore.innerHTML = ''; //Clear the existing info
 
  highscores.forEach(score => {    //show each highscore on the ol list 
   const itemList = document.createElement('li');
@@ -18,30 +16,21 @@ function showHighScores() {
 }
 
 console.log();
-
 console.log("highscore is: ", highscores);
 
+// Event Listener
+clearEl.addEventListener("click", emptyHighScores);  //Event Listener  
+
 function emptyHighScores() {
-
- clearEl.addEventListener("click", emptyHighScores);  //Event Listener  
-
- emptyHighScores();
+ localStorage.removeItem("highscores");
+ showHighScores();
 }
 
-//Empty the highscore
-// function emptyHighScores() {
-
-//  localStorage.removeItem("highscore")
-//  showHighScores()  //Should refresh to display the highscore
-// }
-
-// clearEl.addEventListener("click", emptyHighScores);  //Event Listener  
 
 
-// //invoking the funciton when the page starts 
-// emptyHighScores();
+showHighScores();
 
 
-let testData = localStorage.getItem('scores');
-console.log("Saved Data: ", testData)
-console.log("Saved Data: ", typeof testData)
+// let testData = localStorage.getItem('scores');
+// console.log("Saved Data: ", testData)
+// console.log("Saved Data: ", typeof testData)

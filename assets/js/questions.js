@@ -9,7 +9,6 @@ export const questionList = [
    C: "Sakura Haruno",
    D: "Hinata Hyuga"
   },
-  // correctAnswer: "Naruto Uzumaki"
   correctAnswer: "A"
  },
  {
@@ -31,7 +30,29 @@ export const questionList = [
    D: "Armin Arlert"
   },
   correctAnswer: "A"
- }
+ },
+ {
+  question: "What is the Name of Goku's popular attack in DragonBall Z?",
+  answers: {
+   A: "Kamehameha",
+   B: "Spirit Bomb",
+   C: "Rasengan",
+   D: "Chidori"
+  },
+
+  correctAnswer: "A"
+ },
+ {
+  question: "Who is the prince of the Saiyan race in DragonBall Z?",
+  answers: {
+   A: "Goku",
+   B: "Vegeta",
+   C: "Picoolo",
+   D: "Gohan"
+  },
+  correctAnswer: "B"
+ },
+
 ];
 
 //Testing it

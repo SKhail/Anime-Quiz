@@ -215,6 +215,3 @@ li:nth-child(odd) {
   margin-top: 10px;
   color: red;
 }
-.hide {
-  display: none;
-}
