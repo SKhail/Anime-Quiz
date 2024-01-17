@@ -1,5 +1,8 @@
 // importing the question.JS
 import { questionList } from './questions.js';
+
+// import { showHighScores } from './score.js';
+
 //Variables 
 const timerEl = document.getElementById("time");
 const startButton = document.getElementById("start");
@@ -73,7 +76,8 @@ console.log(startButton);
 
 //The Anime Quiz Game
 function createQuiz() {
-  resetTimer(); //Reseting the Timer
+
+  // resetTimer(); //Reseting the Timer
 
   //This will store the output
   const output = [];
@@ -146,13 +150,13 @@ function moveNextQuestion(event) {
     //Validating incorrect answers 
 
     if (selectedAnswer !== currentQuestion.correctAnswer) {
-      timerClock -= 5;  // Decrease when the answer is incorrect 
-      if (timerClock <= 0) {
-        timerClock = 0;
-      }
+      timerClock -= 10;  // Decrease when the answer is incorrect 
+      // if (timerClock <= 0) {
+      //   timerClock = 0;
+      // }
     } else {
       displayFinalScore++;
-      startTimer();
+      // startTimer();
     }
     console.log("Current Index: ", questionIndexing);
     if (questionIndexing < quizQuestions.length) {
@@ -214,23 +218,23 @@ function hideMessage() {
 function startTimer() {
   timerInterval = setInterval(function () {
     timerClock--;
+    timerEl.textContent = timerClock;
+
     if (timerClock <= 0) {
-      displayMessage('Time is Up, Anime Quiz is done');
-      showStartButton(); //Will need this to redirect 
       clearInterval(timerInterval);
       timerClock = 0;
-      timerEl.textContent = timerClock;
-    } else {
-      timerEl.textContent = timerClock;
+      finalScore()
+      // } else {
+      //   timerEl.textContent = timerClock;
     }
   }, 1000);
 }
 
-//reset the timer
-function resetTimer() {
-  timerClock = 60; // reset
-  timerEl.textContent = timerClock;
-}
+// reset the timer
+// function resetTimer() {
+//   timerClock = "60"; // reset
+//   timerEl.textContent = timerClock;
+// }
 
 //Ability to stop the timer 
 function stopTimer() {
@@ -263,17 +267,19 @@ function submitScore() {
 
   stopTimer(); //Pause this for the user to type the Initials 
 
-  endScreen.classList.remove("hide");
+  endScreen.classList.remove("hide"); //present end screen
 
-  // think of how to use the EVENT object to capture the input VALUE
   //store the initials
   const initials = document.getElementById("initials").value;
 
-  endScreen.classList.add("hide");
+  endScreen.classList.add("hide"); //present end screen
+
   // console.log("Initial", document.getElementById("initials").value);
 
   const storingScores = JSON.parse(localStorage.getItem("scores")) || [];
+
   storingScores.push({ initials, score: finalScoreValue });
+
   localStorage.setItem("scores", JSON.stringify(storingScores));
 
   //call this function from my highscore.js to display highscores on that page
@@ -286,5 +292,7 @@ function submitScore() {
   //Want to redirect to the highscore page
   window.location.href = "highscores.html";
 }
+
+// export { submitScore };  //Export the function
 
 
