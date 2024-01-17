@@ -134,9 +134,6 @@ function moveNextQuestion(event) {
 
   console.log("Event: ", event);  // when you have time inspect this OBJECT
 
-  // console.log("Input Element: ", event.target.children[0]);
-  //currentQuestion
-
   if (event.target.tagName === 'INPUT') {
     // const selectedAnswer = event.target.children[0].value;
     const selectedAnswer = event.target.value;
@@ -176,10 +173,7 @@ console.log(questionsContainer);
 
 function displayMessage(msg) {
 
-  // console.log("Displaying Message:", msg);
-
-
-  if (msg.includes("Incorrect")) {   //if its success or error will be displayed
+  if (msg.includes("Incorrect")) {
     messageEl.classList.add("success");
     messageEl.textContent = msg;
     messageEl.classList.remove("success");
@@ -256,11 +250,9 @@ function showStartButton() {
 
 //This will display the results 
 function finalScore() {
-
   questionsContainer.classList.add("hide");
   endScreen.classList.remove("hide")
   finalScoreValue.textContent = displayFinalScore; //Displaying the final score
-
 }
 
 //Adding event listner to the submision button 
@@ -271,14 +263,21 @@ function submitScore() {
 
   stopTimer(); //Pause this for the user to type the Initials 
 
+  endScreen.classList.remove("hide");
 
   // think of how to use the EVENT object to capture the input VALUE
   //store the initials
-  const initials = document.getElementById("initials").toUpperCase();
+  const initials = document.getElementById("initials").value;
+
+  endScreen.classList.add("hide");
+  // console.log("Initial", document.getElementById("initials").value);
 
   const storingScores = JSON.parse(localStorage.getItem("scores")) || [];
   storingScores.push({ initials, score: finalScoreValue });
   localStorage.setItem("scores", JSON.stringify(storingScores));
+
+  //call this function from my highscore.js to display highscores on that page
+  showHighScores();
 
   startTimer(); //Resume the timer after the score been submitted 
 

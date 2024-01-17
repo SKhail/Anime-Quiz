@@ -2,33 +2,39 @@
 const containerHighScore = document.getElementById("highscores");
 const clearEl = document.getElementById("clear");
 
-//The aim of this is to show the highscores on the highscore page
-function showHighScores() {
- const highscores = JSON.parse(localStorage.getItem("highscores")) || [];
+//Reconfirming if the results are from localStorage 
+function getHighScores() {
+ const storedHighScores = localStorage.getItem("highscores") || [];
+ if (storedHighScores !== null) {
+  const highScore = JSON.parse(storedHighScores)
+  showHighScores(highScore);
+ }
+}
 
- containerHighScore.innerHTML = ''; //Clear the existing info
-
- highscores.forEach(score => {    //show each highscore on the ol list 
+//The aim of this is to show the highscore on the highscore page
+function showHighScores(highScore) {
+ highScore.forEach(score => {    //show each highscore on the ol list 
   const itemList = document.createElement('li');
   itemList.textContent = `${score.initials} - ${score.score}`;
   containerHighScore.appendChild(itemList);
  });
+
+ //checking if it show correctly 
+ console.log("Highscores is: ", highScore);
 }
-
-console.log();
-console.log("highscore is: ", highscores);
-
-// Event Listener
-clearEl.addEventListener("click", emptyHighScores);  //Event Listener  
 
 function emptyHighScores() {
  localStorage.removeItem("highscores");
  showHighScores();
 }
 
+showHighScores(); //show when the page loads 
+// Event Listener
+clearEl.addEventListener("click", emptyHighScores);  //Event Listener  
 
+console.log("Score JS is loading");
+console.log("clearEl is", clearEl);
 
-showHighScores();
 
 
 // let testData = localStorage.getItem('scores');
