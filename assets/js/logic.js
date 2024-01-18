@@ -211,8 +211,6 @@ function startTimer() {
       timerClock = 0; //Set the timer to 0
       finalScore()
       clearInterval(timerInterval);
-    } else {
-      timerEl, textContent = timerClock;
     }
   }, 1000);
 }
