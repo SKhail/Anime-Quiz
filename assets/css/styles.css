@@ -215,3 +215,12 @@ li:nth-child(odd) {
   margin-top: 10px;
   color: red;
 }
+
+/* Score.js  */
+
+li:nth-child(odd) {
+  background-color: var(--btn--main);
+}
+li {
+  background-color: #9e8afd;
+}

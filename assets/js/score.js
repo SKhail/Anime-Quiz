@@ -1,49 +1,55 @@
 //Out of scoped variables 
-document.addEventListener("DOMContentLoaded", function () {
+// console.log("Script loaded");
+const contHighScore = document.getElementById("highscores");
 
- //Reconfirming if the results are from localStorage 
- const storedHighScores = JSON.parse(localStorage.getItem("highscores")) || [];
- const highScore = (storedHighScores);
- showHighScores(highScore);
 
- //The aim of this is to show the highscore on the highscore page
- function showHighScores(highScore) {
-  const containerHighScore = document.getElementById("highscores");
-  if (highScore) {
-   highScore.innerHTML = ''; //forgot to include this  to clear current info
+//Reconfirming if the results are from localStorage 
+function getHighScore() {
+ const storedHighScores = localStorage.getItem("scores");
+ if (storedHighScores !== null) {
+  const hold = JSON.parse(storedHighScores);
+  showHighScores(hold);
+ }
+}
 
-   for (let i = 0; i < highScore.length; i++) {
-    const score = highScore[i];
-    console.log(score);
-    const itemList = document.createElement('li');
-    if (score.initials) {
-     itemList.textContent = `${score.initials} - ${score.score}`;
-     containerHighScore.appendChild(itemList);
-    }
-   }
+//The aim of this is to show the highscore on the highscore page
+function showHighScores(highScore) {
+
+ // console.log(contHighScore);
+ if (contHighScore) {
+
+ }
+ highScore.forEach(function (score) {
+  console.log(score);
+  const itemList = document.createElement('li');
+  itemList.textContent = `${score.initials} - ${score.score}`;
+  contHighScore.appendChild(itemList);
+ });
+
+ console.log(contHighScore);
+ // } else {
+ //  console.log("Invalid HighScore: ", highScore, contHighScore);
+}
+//   console.log("Invalid HighScore: ", highScore);
+
+//  console.log("Highscore is: ", highScore);
+
+function emptyHighScores() {
+ localStorage.clear();
+ if (contHighScore) {
+  const childNodes = contHighScore.children;
+  for (let i = childNodes.length - 1; i >= 0; i--) {
+   contHighScore.removeChild(childNodes[i])
   }
  }
- // console.log("Highscores is: ", highScore);
- const clearEl = document.getElementById("clear");
+}
+const clearEl = document.getElementById("clear");
+if (clearEl) {
+ clearEl.addEventListener("click", emptyHighScores);  //Event Listener 
+}
 
- if (clearEl) {
-  clearEl.addEventListener("click", emptyHighScores);  //Event Listener  
- }
+getHighScore();
 
- function emptyHighScores() {
-  localStorage.removeItem("highscores");
-  showHighScores();
- }
-
- showHighScores(); //show when the page loads 
- // Event Listener
-
-
- console.log("Score JS is loading");
- // console.log("clearEl is", clearEl);
-
-});
-
-
+// console.log("Score JS is loading");
 // console.log("Saved Data: ", testData)
 // console.log("Saved Data: ", typeof testData)

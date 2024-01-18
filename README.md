@@ -33,6 +33,7 @@ Due to time contraint wasn't able to add cool feature although in future will po
 
     ```md
     ![alt text] (images/MainPage.png)
+    ![alt text] (images/DisplayHighScore.png)
     ```
 
 ## Credits

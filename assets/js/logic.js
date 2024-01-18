@@ -1,8 +1,6 @@
 // importing the question.JS
 import { questionList } from './questions.js';
 
-// import { showHighScores } from './score.js';
-
 //Variables 
 const timerEl = document.getElementById("time");
 const startButton = document.getElementById("start");
@@ -11,19 +9,19 @@ const questionsContainer = document.getElementById("questions");
 const descriptionText = document.querySelector(".start p");
 
 // handling the condition if it wrong /correct question
-const msgCont = document.querySelector(".msg-container");
+// const msgCont = document.querySelector(".msg-container");
 const wrongMessageEl = document.getElementById("wrongMessage");
 const messageEl = document.getElementById('message');
 
 //final Score Value
 const finalScoreValue = document.getElementById("final-score");
 const endScreen = document.getElementById("end-screen");
-//Not using it yet 
+
 const submitEl = document.getElementById("submit");
 // const resultEl = document.getElementById("result");
 
 // out of scope variables
-let timerClock = 60; //StartTime
+let timerClock = 61; //StartTime
 let timerInterval;  // to store the changes of time
 let questionIndexing = 0;
 let currentQuestion;
@@ -70,10 +68,6 @@ function openingButton() {
 startButton.addEventListener("click", openingButton);
 console.log(startButton);
 
-
-
-
-
 //The Anime Quiz Game
 function createQuiz() {
 
@@ -88,7 +82,7 @@ function createQuiz() {
   if (currentQuestion) {
     // storing the list of answers
     const answers = [];
-    let correctAnswer;
+    // let correctAnswer;
 
     // Object.entries to iterate over the answers
     Object.entries(currentQuestion.answers).forEach(([letter, answerText]) => {
@@ -120,7 +114,9 @@ function createQuiz() {
     questionsContainer.innerHTML = output.join('');
 
     startTimer(); //Start the Timer
+
   } else {
+
     // console.error("currentQuestion is underfined");
     console.log("No more questions - game end");
 
@@ -146,17 +142,13 @@ function moveNextQuestion(event) {
 
     console.log("Current Question: ", currentQuestion)
 
-    // (!selectedAnswer || selectedAnswer !== currentQuestion.correctAnswer)
+
     //Validating incorrect answers 
 
     if (selectedAnswer !== currentQuestion.correctAnswer) {
       timerClock -= 10;  // Decrease when the answer is incorrect 
-      // if (timerClock <= 0) {
-      //   timerClock = 0;
-      // }
     } else {
       displayFinalScore++;
-      // startTimer();
     }
     console.log("Current Index: ", questionIndexing);
     if (questionIndexing < quizQuestions.length) {
@@ -175,45 +167,40 @@ questionsContainer.addEventListener("click", moveNextQuestion);
 console.log(questionsContainer);
 
 
-function displayMessage(msg) {
+// function displayMessage(msg) {
 
-  if (msg.includes("Incorrect")) {
-    messageEl.classList.add("success");
-    messageEl.textContent = msg;
-    messageEl.classList.remove("success");
-    wrongMessageEl.textContent = "Incorrect Answer! 5 seconds reduced";
-    wrongMessageEl.classList.remove("hide");
+//   if (msg.includes("Incorrect")) {
+//     messageEl.classList.add("success");
+//     messageEl.textContent = msg;
+//     messageEl.classList.remove("success");
+//     wrongMessageEl.textContent = "Incorrect Answer! 5 seconds reduced";
+//     wrongMessageEl.classList.remove("hide");
 
-    timerClock -= 5;
-    if (timerClock < 0) {
-      timerClock = 0;
-    }
-  } else {
-    messageEl.textContent = "Correct Answer! On to the next question";
-    messageEl.classList.add("success");
+//     timerClock -= 5;
+//     if (timerClock < 0) {
+//       timerClock = 0;
+//     }
+//   } else {
+//     messageEl.textContent = "Correct Answer! On to the next question";
+//     messageEl.classList.add("success");
 
-    wrongMessageEl.textContent = '';
-    wrongMessageEl.classList.add('hide');
-  }
-  msgCont.classList.remove("hide");
-}
+//     wrongMessageEl.textContent = '';
+//     wrongMessageEl.classList.add('hide');
+//   }
+//   msgCont.classList.remove("hide");
+// }
 
 //Testing section 
-console.log("does it minus 5 seconds " + timerClock);
-console.log(messageEl);
+// console.log("does it minus 10 seconds " + timerClock);
+// console.log(messageEl);
 // console.log(wrongMessageEl);
-
 
 function hideMessage() {
   messageEl.textContent = "";
   messageEl.classList.add("hide");
   wrongMessageEl.textContent = '';
   wrongMessageEl.classList.add('hide');
-
-  // msgCont.classList.remove("hide");
-
 }
-
 // This is the Timer Section 
 function startTimer() {
   timerInterval = setInterval(function () {
@@ -221,78 +208,82 @@ function startTimer() {
     timerEl.textContent = timerClock;
 
     if (timerClock <= 0) {
-      clearInterval(timerInterval);
-      timerClock = 0;
+      timerClock = 0; //Set the timer to 0
       finalScore()
-      // } else {
-      //   timerEl.textContent = timerClock;
+      clearInterval(timerInterval);
+    } else {
+      timerEl, textContent = timerClock;
     }
   }, 1000);
 }
 
-// reset the timer
-// function resetTimer() {
-//   timerClock = "60"; // reset
-//   timerEl.textContent = timerClock;
-// }
 
 //Ability to stop the timer 
 function stopTimer() {
   clearInterval(timerInterval);
 }
 
-
-function showStartButton() {
-  startButton.classList.remove("hide");
-  descriptionText.classList.remove("hide");
-  questionsContainer.classList.add("hide");
-  endScreen.classList.add("hide");
-  startScreen.classList.remove("hide");
-  startButton.textContent = "Start Quiz";
-}
-
+// function showStartButton() {
+//   startButton.classList.remove("hide");
+//   descriptionText.classList.remove("hide");
+//   questionsContainer.classList.add("hide");
+//   endScreen.classList.add("hide");
+//   startScreen.classList.remove("hide");
+//   startButton.textContent = "Start Quiz";
+// }
 
 //This will display the results 
 function finalScore() {
+  stopTimer();
   questionsContainer.classList.add("hide");
   endScreen.classList.remove("hide")
   finalScoreValue.textContent = displayFinalScore; //Displaying the final score
 }
 
-//Adding event listner to the submision button 
+//Adding event listner to the submision button
 submitEl.addEventListener("click", submitScore);
-console.log(submitEl);
+// console.log(submitEl);
 
 function submitScore() {
 
+  console.log("submitScore Function is called");
   stopTimer(); //Pause this for the user to type the Initials 
 
-  endScreen.classList.remove("hide"); //present end screen
-
-  //store the initials
-  const initials = document.getElementById("initials").value;
+  //store the initials and reduce it by trimming
+  const inputInitials = document.getElementById("initials");
+  const initials = inputInitials.value.trim().toUpperCase();
 
   endScreen.classList.add("hide"); //present end screen
 
-  // console.log("Initial", document.getElementById("initials").value);
+  //condition for initials 
+  if (initials !== "") {
+    const storingScores = JSON.parse(localStorage.getItem("scores")) || [];
 
-  const storingScores = JSON.parse(localStorage.getItem("scores")) || [];
+    // converting to a number 
+    const scoreValueNum = parseFloat(finalScoreValue.textContent);
 
-  storingScores.push({ initials, score: finalScoreValue });
+    if (!isNaN(scoreValueNum)) {
+      storingScores.push({
+        initials: initials,
+        score: scoreValueNum
+      });
+      // handle the scores in decending order
+      storingScores.sort((a, b) => b.score - a.score);
 
-  localStorage.setItem("scores", JSON.stringify(storingScores));
+      //max 10 scores stored
+      storingScores.splice(10);
 
-  //call this function from my highscore.js to display highscores on that page
-  showHighScores();
+      localStorage.setItem("scores", JSON.stringify(storingScores));
+      console.log("Scores stored in local storage");
 
-  startTimer(); //Resume the timer after the score been submitted 
+      window.location.href = "highscores.html";  //Want to redirect to the highscore page
+    }
+  }
+  console.log("After storing scores", storingScores);
+  console.log("Final score value", finalScoreValue);
 
-  showStartButton();
-  createQuiz();
-  //Want to redirect to the highscore page
-  window.location.href = "highscores.html";
+  //Call it from the score.js
+  getHighScore();
 }
-
-// export { submitScore };  //Export the function
 
 
