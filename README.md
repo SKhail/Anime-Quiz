@@ -28,13 +28,13 @@ Due to time contraint wasn't able to add cool feature although in future will po
     git clone https://github.com/SKhail/Anime-Quiz.git
     cd Anime-Quiz
 2.  Once cloned, you can start the application
+    3 Access the deployed application [Deployed Site Link] (https://skhail.github.io/Anime-Quiz/)
 3.  You will have it in your local machines and can start the Application.
 4.  A screenshot location will be provided below to show how the Anime Quiz is displayed:
 
-    ```md
-    ![alt text] (images/MainPage.png)
-    ![alt text] (images/DisplayHighScore.png)
-    ```
+[Application Screenshots]
+(assets/images/MainPage.png)
+(assets/images/DisplayHighScore.png)
 
 ## Credits
 
