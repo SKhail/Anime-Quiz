@@ -32,9 +32,9 @@ Due to time contraint wasn't able to add cool feature although in future will po
 3.  You will have it in your local machines and can start the Application.
 4.  A screenshot location will be provided below to show how the Anime Quiz is displayed:
 
-    [Alt Text](assets/images/MainPage.png)
+<img src="assets/images/MainPage.png" alt="Main-Page" />
 
-    [Alt Text](assets/images/DisplayHighScore.png)
+<img src="assets/images/DisplayHighScore.png" alt="HighScore" />
 
 ## Credits
 
